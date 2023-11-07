@@ -11,7 +11,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Fleek
-    fleek.url = "https://flakehub.com/f/ublue-os/fleek/*.tar.gz";
+    fleek.url = "github:nshalman/fleek/devenv";
+
+    # Devenv
+    devenv.url = "github:cachix/devenv/main";
+    devenv.inputs.nixpkgs.follows = "nixpkgs";
 
     # Overlays
     {{ range $index, $element := .Config.Overlays }}
@@ -21,7 +25,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, fleek, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, fleek, devenv, ... }@inputs: {
     {{ range .Config.UniqueSystems }}
      packages.{{ . }}.fleek = fleek.packages.{{ . }}.default;
     {{ end }}
@@ -46,6 +50,7 @@
           {
             home.packages = [
               fleek.packages.{{ .Arch }}-{{ .OS }}.default
+              devenv.packages.{{ .Arch }}-{{ .OS }}.default
             ];
           }
           ({
