@@ -8,14 +8,14 @@
 
     # Home manager
     home-manager.url = "https://flakehub.com/f/nix-community/home-manager/0.1.tar.gz";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    #home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Fleek
     fleek.url = "github:nshalman/fleek/devenv";
 
     # Devenv
     devenv.url = "github:cachix/devenv/main";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
+    #devenv.inputs.nixpkgs.follows = "nixpkgs";
 
     # Overlays
     {{ range $index, $element := .Config.Overlays }}
