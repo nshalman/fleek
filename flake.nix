@@ -2,12 +2,12 @@
   description = "Fleek - 'Home as Code' for Humans";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
   };
 
   outputs = { self, nixpkgs }: let
     # Current version
-    version = "0.10.5";
+    version = "0.10.6";
     # Supported systems
     systems = [
       "aarch64-linux" # 64-bit ARM Linux
@@ -17,8 +17,8 @@
     ];
     overlays = [
         (self: super: rec {
-          go = super.go_1_21;
-          buildGoModule = super.buildGo121Module;
+          go = super.go_1_25;
+          buildGoModule = super.buildGo125Module;
 
         })
       ];
@@ -41,8 +41,8 @@
           installShellFiles # Shell completion helper function (see postInstall below)
         ];
         subPackages = [ "cmd/fleek" ];
-        vendorSha256 = null;
-        CGO_ENABLED = 0;
+        vendorHash = null;
+        env.CGO_ENABLED = 0;
         ldflags = [
           "-s"
           "-w"
