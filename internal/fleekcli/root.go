@@ -10,7 +10,6 @@ import (
 	"github.com/ublue-os/fleek/internal/flake"
 	"github.com/ublue-os/fleek/internal/fleek"
 	"github.com/ublue-os/fleek/internal/fleekcli/usererr"
-	"github.com/ublue-os/fleek/internal/vercheck"
 	"github.com/ublue-os/fleek/internal/xdg"
 )
 
@@ -34,7 +33,6 @@ func RootCmd() *cobra.Command {
 			if flags.quiet {
 				cmd.SetErr(io.Discard)
 			}
-			vercheck.CheckVersion(cmd.ErrOrStderr(), cmd.CommandPath())
 			fin.Logger.Debug("debug enabled")
 			info, ok := debug.ReadBuildInfo()
 			if ok {

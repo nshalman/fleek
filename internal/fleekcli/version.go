@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/ublue-os/fleek/internal/build"
 	"github.com/ublue-os/fleek/internal/envir"
-	"github.com/ublue-os/fleek/internal/vercheck"
 )
 
 type versionFlags struct {
@@ -34,18 +33,6 @@ func VersionCmd() *cobra.Command {
 	return command
 }
 
-func selfUpdateCmd() *cobra.Command {
-	command := &cobra.Command{
-		Use:   "update",
-		Short: "Update fleek launcher and binary",
-		Args:  cobra.ExactArgs(0),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return vercheck.SelfUpdate(cmd.OutOrStdout(), cmd.ErrOrStderr())
-		},
-	}
-
-	return command
-}
 func versionCmdFunc(cmd *cobra.Command, _ []string, flags versionFlags) error {
 	w := cmd.OutOrStdout()
 	v := getVersionInfo()
@@ -57,7 +44,6 @@ func versionCmdFunc(cmd *cobra.Command, _ []string, flags versionFlags) error {
 		fmt.Fprintf(w, app.Trans("version.time"), v.CommitDate)
 		fmt.Fprintf(w, app.Trans("version.go"), v.GoVersion)
 		fmt.Fprintf(w, "Launcher:    %v\n", v.LauncherVersion)
-		fmt.Fprintf(w, "Upgrade available: %v\n", isNewFleekAvailable(v.Version, lv))
 
 	} else {
 		fmt.Fprintf(w, "%v\n", v.Version)
