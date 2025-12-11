@@ -5,14 +5,14 @@
     {{- if not .BYOGit  }}
     programs.git = {
         enable = true;
-        aliases = {
-            pushall = "!git remote | xargs -L1 git push --all";
-            graph = "log --decorate --oneline --graph";
-            add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
-        };
-        userName = "{{.User.Name}}";
-        userEmail = "{{.User.Email}}";
-        extraConfig = {
+        settings = {
+            aliases = {
+                pushall = "!git remote | xargs -L1 git push --all";
+                graph = "log --decorate --oneline --graph";
+                add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
+            };
+            user.name = "{{.User.Name}}";
+            user.email = "{{.User.Email}}";
             feature.manyFiles = true;
             init.defaultBranch = "main";
             gpg.format = "ssh";
