@@ -29,7 +29,6 @@ func VersionCmd() *cobra.Command {
 		app.Trans("version.flagVerboseDescription"),
 	)
 
-	command.AddCommand(selfUpdateCmd())
 	return command
 }
 
