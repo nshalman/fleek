@@ -2,14 +2,10 @@ package fleekcli
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"runtime"
-	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/ublue-os/fleek/fin"
 	"github.com/ublue-os/fleek/internal/build"
 	"github.com/ublue-os/fleek/internal/envir"
 	"github.com/ublue-os/fleek/internal/vercheck"
@@ -53,10 +49,6 @@ func selfUpdateCmd() *cobra.Command {
 func versionCmdFunc(cmd *cobra.Command, _ []string, flags versionFlags) error {
 	w := cmd.OutOrStdout()
 	v := getVersionInfo()
-	lv, err := latestVersion()
-	if err != nil {
-		fin.Logger.Warn("Unable to check latest version", fin.Logger.Args("error", err))
-	}
 	if flags.verbose {
 		fmt.Fprintf(w, app.Trans("version.version"), v.Version)
 
@@ -65,7 +57,6 @@ func versionCmdFunc(cmd *cobra.Command, _ []string, flags versionFlags) error {
 		fmt.Fprintf(w, app.Trans("version.time"), v.CommitDate)
 		fmt.Fprintf(w, app.Trans("version.go"), v.GoVersion)
 		fmt.Fprintf(w, "Launcher:    %v\n", v.LauncherVersion)
-		fmt.Fprintf(w, "Latest Version:    %v\n", lv)
 		fmt.Fprintf(w, "Upgrade available: %v\n", isNewFleekAvailable(v.Version, lv))
 
 	} else {
@@ -95,29 +86,4 @@ func getVersionInfo() *versionInfo {
 	}
 
 	return v
-}
-
-func latestVersion() (string, error) {
-	res, err := http.Get("https://releases.getfleek.dev/fleek/stable/version")
-	if err != nil {
-		return "unknown", err
-	}
-	defer res.Body.Close()
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		return "unknown", err
-	}
-	sb := string(body)
-	return strings.TrimSpace(sb), nil
-}
-
-// isNewFleekAvailable returns true if a new fleek CLI binary version is available.
-func isNewFleekAvailable(current, latest string) bool {
-	if latest == "" {
-		return false
-	}
-	if strings.Contains(current, "0.0.0-dev") {
-		return false
-	}
-	return vercheck.SemverCompare(current, latest) < 0
 }
