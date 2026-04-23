@@ -22,10 +22,6 @@
     description: | 
       ripgrep recursively searches directories for a regex pattern while respecting your gitignore
       https://github.com/BurntSushi/ripgrep
-  - name: vscode
-    description: | 
-      Code editing. Redefined.
-      https://code.visualstudio.com/
   - name: lazygit
     description: | 
       simple terminal UI for git commands

@@ -6,8 +6,7 @@ packages:
   - github-cli
   - glab
   - fzf
-  - ripgrep 
-  - vscode
+  - ripgrep
   - just
 programs:
   - direnv
