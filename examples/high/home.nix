@@ -32,7 +32,6 @@
     pkgs.jq
     pkgs.yq
     pkgs.neovim
-    pkgs.neofetch
     pkgs.btop
     pkgs.cheat
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })

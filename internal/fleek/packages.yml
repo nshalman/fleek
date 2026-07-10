@@ -38,10 +38,6 @@
     description: | 
       hyperextensible Vim-based text editor
       http://neovim.io/
-  - name: neofetch
-    description: | 
-      A command-line system information tool written in bash 3.2+
-      https://github.com/dylanaraps/neofetch
   - name: btop
     description: | 
       A monitor of resources
